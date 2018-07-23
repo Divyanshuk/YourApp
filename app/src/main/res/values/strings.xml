@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Your App</string>
+    <string name="appwidget_text">Search YourApp..</string>
+    <string name="add_widget">Add widget</string>
 </resources>
