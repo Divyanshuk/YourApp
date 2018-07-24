@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
          *
          * There are two param, 2nd one takes the name of Application
          */
-        final MyAdapter adapter = new MyAdapter(this, new installedApps(this).getNameOf());
+        final MyAdapter adapter = new MyAdapter(this, new installedApps(this).getAllAppInfo());
 
 
         list.setAdapter(adapter);

@@ -2,6 +2,8 @@ package com.example.divyanshukumar.yourapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
      Context context1;
 
-     ArrayList<String> mNameset;
+     ArrayList<String> mDataset;
 
     List<String> filterList;
 
@@ -42,12 +44,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Context context, ArrayList<String> nameoftheapplication) {
+    public MyAdapter(Context context, ArrayList<String> packagenameofApplication) {
 
         context1 = context;
-        mNameset = nameoftheapplication;
 
-        filterList = mNameset;
+        mDataset = packagenameofApplication;
+
+        filterList = mDataset;
 
     }
 
@@ -69,15 +72,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-//        installedApps apkInfoExtractor = new installedApps(context1);
-////
-//        final String ApplicationPackageName = (String) mDataset.get(position);
-////
-//        String ApplicationLabelName = apkInfoExtractor.getAppName(ApplicationPackageName);
+        installedApps apkInfoExtractor = new installedApps(context1);
+//
+        final String ApplicationPackageName = (String) mDataset.get(position);
+//
+        final String ApplicationLabelName = apkInfoExtractor.getAppName(ApplicationPackageName);
 
-        final installedApps apkInfoExtractor = new installedApps(context1);
-
-        final String ApplicationLabelName = (String) mNameset.get(position);
+//        final installedApps apkInfoExtractor = new installedApps(context1);
+//
+//        final String ApplicationLabelName = (String) mNameset.get(position);
 
 
         // - get element from your dataset at this position
@@ -90,14 +93,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             public void onClick(View v) {
 
 
-                Intent intent = context1.getPackageManager().getLaunchIntentForPackage(apkInfoExtractor.getPackNameByAppName(ApplicationLabelName));
+//                Intent intent = context1.getPackageManager().getLaunchIntentForPackage(apkInfoExtractor.getPackNameByAppName(ApplicationLabelName));
+//                if (intent != null) {
+//
+//                    context1.startActivity(intent);
+//
+//                } else {
+//
+//                    Toast.makeText(context1, apkInfoExtractor.getPackNameByAppName(ApplicationLabelName) + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
+//                }
+
+                Intent intent = context1.getPackageManager().getLaunchIntentForPackage(ApplicationPackageName);
                 if (intent != null) {
 
                     context1.startActivity(intent);
 
                 } else {
 
-                    Toast.makeText(context1, apkInfoExtractor.getPackNameByAppName(ApplicationLabelName) + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context1, ApplicationPackageName + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -108,7 +121,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     @Override
     public int getItemCount() {
 
-        return mNameset.size();
+        return mDataset.size();
 
     }
 
@@ -144,11 +157,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
                 List<String> tempList = new ArrayList<String>();
 
-            for (String ApplicationLabelName : filterList) {
+                installedApps apkInfoExtractor = new installedApps(context1);
 
-                    if (ApplicationLabelName.toLowerCase().contains(filterString)) {
 
-                        tempList.add(ApplicationLabelName);
+                for (String packageOfApplication : filterList) {
+
+                    String ApplicationLabelName = apkInfoExtractor.getAppName(packageOfApplication);
+
+
+                if (ApplicationLabelName.toLowerCase().contains(filterString)) {
+
+//                    installedApps apkInfoExtractor = new installedApps(context1);
+//
+//
+//                    String ApplicationLabelName = apkInfoExtractor.getAppName(packageOfApplication);
+
+                        tempList.add(packageOfApplication);
                     }
 
                 }
@@ -172,15 +196,40 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results){
 
-                mNameset = (ArrayList<String>) results.values;
+                mDataset = (ArrayList<String>) results.values;
 
                 notifyDataSetChanged();
             }
         }
 
-
+    /**
+     *
+     * @param appPackageName this is package name
+     * @return App name
+     */
+//    public String getAppName(String appPackageName){
 //
-
+//        String Name = "";
+//
+//        ApplicationInfo applicationInfo;
+//
+//        PackageManager packageManager = context1.getPackageManager();
+//
+//        try {
+//
+//            applicationInfo = packageManager.getApplicationInfo(appPackageName, 0);
+//
+//            if(applicationInfo!=null){
+//
+//                Name = (String)packageManager.getApplicationLabel(applicationInfo);
+//            }
+//
+//        }catch (PackageManager.NameNotFoundException e) {
+//
+//            e.printStackTrace();
+//        }
+//        return Name;
+//    }
 
     }
 
