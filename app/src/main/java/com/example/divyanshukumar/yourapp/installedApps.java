@@ -104,29 +104,29 @@ public class installedApps {
          }
 
 
-         public String getAppName(String appPackageName){
-
-        String Name = "";
-
-        ApplicationInfo applicationInfo;
-
-        PackageManager packageManager = context1.getPackageManager();
-
-             try {
-
-                 applicationInfo = packageManager.getApplicationInfo(appPackageName, 0);
-
-                 if(applicationInfo!=null){
-
-                     Name = (String)packageManager.getApplicationLabel(applicationInfo);
-                 }
-
-             }catch (PackageManager.NameNotFoundException e) {
-
-                 e.printStackTrace();
-             }
-             return Name;
-         }
+//         public String getAppName(String appPackageName){
+//
+//        String Name = "";
+//
+//        ApplicationInfo applicationInfo;
+//
+//        PackageManager packageManager = context1.getPackageManager();
+//
+//             try {
+//
+//                 applicationInfo = packageManager.getApplicationInfo(appPackageName, 0);
+//
+//                 if(applicationInfo!=null){
+//
+//                     Name = (String)packageManager.getApplicationLabel(applicationInfo);
+//                 }
+//
+//             }catch (PackageManager.NameNotFoundException e) {
+//
+//                 e.printStackTrace();
+//             }
+//             return Name;
+//         }
 
 }
 

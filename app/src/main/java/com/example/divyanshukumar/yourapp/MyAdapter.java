@@ -72,11 +72,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        installedApps apkInfoExtractor = new installedApps(context1);
+//        installedApps apkInfoExtractor = new installedApps(context1);
 //
         final String ApplicationPackageName = (String) mDataset.get(position);
 //
-        final String ApplicationLabelName = apkInfoExtractor.getAppName(ApplicationPackageName);
+        final String ApplicationLabelName = getAppName(ApplicationPackageName);
 
 //        final installedApps apkInfoExtractor = new installedApps(context1);
 //
@@ -157,12 +157,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
                 List<String> tempList = new ArrayList<String>();
 
-                installedApps apkInfoExtractor = new installedApps(context1);
+//                installedApps apkInfoExtractor = new installedApps(context1);
 
 
                 for (String packageOfApplication : filterList) {
 
-                    String ApplicationLabelName = apkInfoExtractor.getAppName(packageOfApplication);
+                    String ApplicationLabelName = getAppName(packageOfApplication);
 
 
                 if (ApplicationLabelName.toLowerCase().contains(filterString)) {
@@ -207,29 +207,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
      * @param appPackageName this is package name
      * @return App name
      */
-//    public String getAppName(String appPackageName){
-//
-//        String Name = "";
-//
-//        ApplicationInfo applicationInfo;
-//
-//        PackageManager packageManager = context1.getPackageManager();
-//
-//        try {
-//
-//            applicationInfo = packageManager.getApplicationInfo(appPackageName, 0);
-//
-//            if(applicationInfo!=null){
-//
-//                Name = (String)packageManager.getApplicationLabel(applicationInfo);
-//            }
-//
-//        }catch (PackageManager.NameNotFoundException e) {
-//
-//            e.printStackTrace();
-//        }
-//        return Name;
-//    }
+    public String getAppName(String appPackageName){
+
+        String Name = "";
+
+        ApplicationInfo applicationInfo;
+
+        PackageManager packageManager = context1.getPackageManager();
+
+        try {
+
+            applicationInfo = packageManager.getApplicationInfo(appPackageName, 0);
+
+            if(applicationInfo!=null){
+
+                Name = (String)packageManager.getApplicationLabel(applicationInfo);
+            }
+
+        }catch (PackageManager.NameNotFoundException e) {
+
+            e.printStackTrace();
+        }
+        return Name;
+    }
 
     }
 
