@@ -144,7 +144,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
                 List<String> tempList = new ArrayList<String>();
 
-            for (String ApplicationLabelName : mNameset) {
+            for (String ApplicationLabelName : filterList) {
 
                     if (ApplicationLabelName.toLowerCase().contains(filterString)) {
 
