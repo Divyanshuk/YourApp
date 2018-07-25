@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,9 +25,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
      ArrayList<String> mDataset;
 
+     ArrayList<String> mNameset;
+
     List<String> filterList;
 
     ItemFilter mFilter ;
+
+
 
 
     /**
@@ -44,15 +50,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Context context, ArrayList<String> packagenameofApplication) {
+    public MyAdapter(Context context, ArrayList<String> packagenameofApplication, ArrayList<String> applicationName) {
 
         context1 = context;
 
         mDataset = packagenameofApplication;
 
+        mNameset = applicationName;
+
         filterList = mDataset;
 
+
     }
+
 
 
     // Create new views (invoked by the layout manager)
@@ -76,7 +86,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 //
         final String ApplicationPackageName = (String) mDataset.get(position);
 //
-        final String ApplicationLabelName = getAppName(ApplicationPackageName);
+         String ApplicationLabelName = getAppName(ApplicationPackageName);
 
 //        final installedApps apkInfoExtractor = new installedApps(context1);
 //
@@ -87,6 +97,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         // - replace the contents of the view with that element
 
         holder.mTextView.setText(ApplicationLabelName);
+
+//        holder.mTextView.setText(mNameset.get(position));
 
         holder.mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,12 +169,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
                 List<String> tempList = new ArrayList<String>();
 
+
 //                installedApps apkInfoExtractor = new installedApps(context1);
 
+                String packageOfApplication;
 
-                for (String packageOfApplication : filterList) {
+//                for (String packageOfApplication : filterList) {
 
-                    String ApplicationLabelName = getAppName(packageOfApplication);
+                    for(int i=0; i < filterList.size(); i++){
+
+                        packageOfApplication = filterList.get(i);
+
+//                    String ApplicationLabelName = getAppName(packageOfApplication);
+
+                        String ApplicationLabelName = mNameset.get(i);
 
 
                 if (ApplicationLabelName.toLowerCase().contains(filterString)) {
@@ -173,13 +193,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 //                    String ApplicationLabelName = apkInfoExtractor.getAppName(packageOfApplication);
 
                         tempList.add(packageOfApplication);
-                    }
+
+                        }
 
                 }
 
 
                 results.values = tempList;
                 results.count = tempList.size();
+
+
             }
 
             else {

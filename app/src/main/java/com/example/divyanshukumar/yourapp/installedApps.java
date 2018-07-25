@@ -25,37 +25,37 @@ public class installedApps {
      * GO BELOW THE COMMENTS
      *
      */
-//    public ArrayList<String> getNameOf() {
-//
-//
-//        ArrayList<String> nameOf = new ArrayList<String>();
-//
-//        final PackageManager pm = context1.getPackageManager();
-//
-//        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-//
-//
-//
-//        for(ApplicationInfo packageInfo : packages){
-//
-//                String appName = pm.getApplicationLabel(packageInfo).toString();
-//
-//
-//                nameOf.add(appName);
-//        }
-//
-//
-//        return nameOf;
-//
-//    }
-//
-//
-//    /**
-//     * IT WILL GET THE APP PACKAGE NAME THROUGH APP NAME FROM THE ABOVE FUNCTION
-//     *
-//     * @param name
-//     * @return PACKAGE NAME
-//     */
+    public ArrayList<String> getNameOf() {
+
+
+        ArrayList<String> nameOf = new ArrayList<String>();
+
+        final PackageManager pm = context1.getPackageManager();
+
+        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
+
+
+        for(ApplicationInfo packageInfo : packages){
+
+                String appName = pm.getApplicationLabel(packageInfo).toString();
+
+
+                nameOf.add(appName);
+        }
+
+
+        return nameOf;
+
+    }
+
+
+    /**
+     * IT WILL GET THE APP PACKAGE NAME THROUGH APP NAME FROM THE ABOVE FUNCTION
+     *
+     * @param name
+     * @return PACKAGE NAME
+     */
 //    public String getPackNameByAppName(String name) {
 //        PackageManager pm = context1.getPackageManager();
 //        List<ApplicationInfo> l = pm.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -96,10 +96,16 @@ public class installedApps {
 
                     PKname.add(packageInfo.packageName);
 
+            /**
+             * AppName
+             */
+//            String appName = pm.getApplicationLabel(packageInfo).toString();
 
-                }
 
-                return PKname;
+
+        }
+
+        return PKname;
 
          }
 
