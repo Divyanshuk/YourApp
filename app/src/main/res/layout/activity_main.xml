@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
 
     <!--<ListView
         android:id="@+id/app_List"
@@ -19,40 +38,33 @@
         -->
 
 
-    <SearchView
-        android:id="@+id/search_View"
-        android:layout_width="0dp"
-
-        android:layout_height="41dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginStart="7dp"
-        android:iconifiedByDefault="false"
-        android:queryHint="@string/appwidget_text"
-        app:layout_constraintBottom_toTopOf="@+id/app_List"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <requestFocus />
-
-    </SearchView>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/app_List"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
         android:scrollbars="vertical"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_View" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
+    <!--<Button-->
+        <!--android:id="@+id/button2"-->
+        <!--android:layout_width="88dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginBottom="3dp"-->
+        <!--android:layout_marginTop="77dp"-->
+        <!--android:onClick="nextActivity"-->
+        <!--android:text="Button"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/app_List"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.541"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/search_View"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </android.support.constraint.ConstraintLayout>
