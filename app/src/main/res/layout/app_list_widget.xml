@@ -23,8 +23,8 @@
         android:background="@drawable/rounded_corner"
         android:layout_alignParentLeft="true"
         android:text="@string/appwidget_text"
-        android:textColor="@color/cardview_dark_background"
-        android:textSize="24sp"
+        android:textColor="#858585"
+        android:textSize="20sp"
         android:textStyle="italic" />
 
     <ImageView

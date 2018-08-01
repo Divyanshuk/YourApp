@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toolbar;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
 
      SearchView searchView;
 
+   static int detectDoubleTap;
 
 
     @Override
@@ -60,8 +62,6 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        getSupportActionBar().setTitle("Seach Here");
 
 
         /**
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
+
 
 
     @Override
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity{
     public class LoadData1 extends AsyncTask<Void, Void ,Void>{
 
         ProgressDialog progressDialog;
+
         AppDbHelper DbHelper;
 
 
@@ -170,7 +172,8 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute(){
 
-            progressDialog = ProgressDialog.show(thisContext, "Add YourApp's COOL Widget", "First time loading");
+            progressDialog = ProgressDialog.show(thisContext, "First Time Loading", "LaLaLaLaLaLaLa");
+
 
         }
 
@@ -203,7 +206,10 @@ public class MainActivity extends AppCompatActivity{
                  */
                 String appName = pm.getApplicationLabel(packageInfo).toString();
 
-                if(!isSystemPackage(packageInfo)|packName.contains("com.google")) {
+                /**
+                 * Secret ingredient
+                 */
+                if(thisContext.getPackageManager().getLaunchIntentForPackage(packName) != null) {
                     values1.put(AppEntry.COLUMN_APP_NAME, appName);
                     values1.put(AppEntry.COLUMN_APP_PACKAGE, packName);
 
@@ -342,7 +348,7 @@ public class MainActivity extends AppCompatActivity{
                  */
                 String appName = pm.getApplicationLabel(packageInfo).toString();
 
-                if(!isSystemPackage(packageInfo)|packName.contains("com.google")) {
+                if(thisContext.getPackageManager().getLaunchIntentForPackage(packName) != null) {
                     values1.put(AppEntry.COLUMN_APP_NAME, appName);
                     values1.put(AppEntry.COLUMN_APP_PACKAGE, packName);
 
@@ -363,9 +369,8 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private boolean isSystemPackage(ApplicationInfo applicationInfo) {
-        return ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-    }
+
+
 
     }
 

@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_marginBottom=".5dp"
+    android:background="#FFFFFF"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
     app:cardCornerRadius="1dp"
     app:cardElevation="0dp"
     app:cardMaxElevation="5dp"
@@ -19,7 +22,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="73dp">
+        android:layout_height="69dp">
 
 
         <ImageView
@@ -39,26 +42,27 @@
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginBottom="6dp"
             android:layout_marginStart="69dp"
             android:background="@color/colorView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
 
         <TextView
             android:id="@+id/simple_text1"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="17dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="24dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="17sp"
-            android:textStyle="bold"
+            android:textColor="#455A64"
+            android:textSize="14sp"
+            android:textStyle="italic|bold"
+            android:text="Testing"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/App_imageView"

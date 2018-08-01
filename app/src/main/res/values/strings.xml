@@ -2,4 +2,23 @@
     <string name="app_name">Your App</string>
     <string name="appwidget_text">Search YourApp..</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Hey There!</string>
+    <string name="slide_1_desc">So Let Us Get Started!</string>
+
+    <string name="slide_2_title">Search is Here</string>
+    <string name="slide_2_desc">A Fast and Simple App to search all your Apps!</string>
+
+    <string name="slide_3_title">Also this Cool Widget</string>
+    <string name="slide_3_desc">Go to home screen, hold the blank space and add YourApp widget</string>
+
+    <string name="slide_4_title">Search By Tags</string>
+    <string name="slide_4_desc">(coming soon) Forgot the app name, not to worry, Just enable search by Tags</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
 </resources>

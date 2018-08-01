@@ -17,7 +17,7 @@ public final class AppContract {
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_APP_NAME = "name";
         public final static String COLUMN_APP_PACKAGE = "package";
-//        public final static String COLUMN_APP_ICON = "icon";
+//        public final static String COLUMN_APP_ICON = "icon"
     }
 
 }
