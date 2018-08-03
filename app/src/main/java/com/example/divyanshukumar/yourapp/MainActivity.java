@@ -438,7 +438,7 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected void onPostExecute(Void voids){
-//            mAdView.loadAd(adRequest);
+            mAdView.loadAd(adRequest);
 
         }
     }
