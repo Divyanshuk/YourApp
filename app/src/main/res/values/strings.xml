@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Your App</string>
-    <string name ="blank"></string>
+    <string name="blank"></string>
     <string name="appwidget_text">Search YourApp..</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-7317881360071194/4003536809</string>
+
 
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>

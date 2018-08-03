@@ -22,10 +22,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.divyanshukumar.yourapp.data.AppContract.AppEntry;
 import com.example.divyanshukumar.yourapp.data.AppDbHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +37,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
+    private AdView mAdView;
+
+    AdRequest adRequest;
 
     Context thisContext = this;
 
@@ -45,19 +51,20 @@ public class MainActivity extends AppCompatActivity{
 
      SearchView searchView;
 
-   static int detectDoubleTap;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        mAdView = findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
-//        DbHelper = new AppDbHelper(this);
 /**
  * Toolbar commands
  */
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -76,12 +83,20 @@ public class MainActivity extends AppCompatActivity{
             LoadData1 object = new LoadData1();
 
             object.execute();
+
+            LoadAd object2 = new LoadAd();
+            object2.execute();
         }
         else{
 
             UpdateData1 object1 = new UpdateData1();
 
             object1.execute();
+
+            LoadAd object2 = new LoadAd();
+            object2.execute();
+
+
         }
 
     }
@@ -110,14 +125,28 @@ public class MainActivity extends AppCompatActivity{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // filter recycler view when query submitted
+
+                String ApplicationPackageName = adapter.mDataset.get(0);
+
+                Intent intent = thisContext.getPackageManager().getLaunchIntentForPackage(ApplicationPackageName);
+                if (intent != null) {
+
+                    thisContext.startActivity(intent);
+
+                } else {
+
+                    Toast.makeText(thisContext, ApplicationPackageName + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
+                }
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
+
                 // filter recycler view when text is changed
                 adapter.getFilter().filter(query);
+
                 return false;
             }
         });
@@ -125,13 +154,13 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-
-    /**
-     * For back button , when pressed it exit the app
-     * @param item
-     * @return
-     */
-//    @Override
+//
+//    /**
+//     * For back button , when pressed it exit the app
+//     * @param item
+//     * @return
+//     */
+////    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Handle action bar item clicks here. The action bar will
 //        // automatically handle clicks on the Home/Up button, so long
@@ -144,6 +173,23 @@ public class MainActivity extends AppCompatActivity{
 //
 //    }
 
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        int id = item.getItemId();
+//
+//        if (id == R.id.tag_red) {
+//
+//            Intent intent = new Intent(thisContext, TestingTagSearch.class);
+//
+//            startActivity(intent);
+//
+////            Toast toast = Toast.makeText(thisContext, "hello", Toast.LENGTH_LONG);
+////            toast.show();
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
 //    public void nextActivity(View view) {
@@ -272,6 +318,7 @@ public class MainActivity extends AppCompatActivity{
         AppDbHelper DBhelper;
 
 
+
         UpdateData1(){
 
             DBhelper = new AppDbHelper(thisContext);
@@ -280,15 +327,20 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute(){
 
-            list = (RecyclerView) findViewById(R.id.app_List);
+
+            list = findViewById(R.id.app_List);
 
             list.setHasFixedSize(true);
+//            list.setItemViewCacheSize(20);
+//            list.setDrawingCacheEnabled(true);
+//            list.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
 
 
             mLayoutManager = new LinearLayoutManager(thisContext);
             list.setLayoutManager(mLayoutManager);
 
             adapter = new MyAdapter(thisContext, new installedApps(thisContext).getAppPackage(), new installedApps(thisContext).getAppName());
+
 
             list.setAdapter(adapter);
 
@@ -319,6 +371,7 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected Void doInBackground(Void... voids) {
+
 
             SQLiteDatabase db1 = DBhelper.getWritableDatabase();
 
@@ -370,6 +423,25 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    public class LoadAd extends AsyncTask<Void,Void,Void>{
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            mAdView = findViewById(R.id.adView);
+         adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids){
+            mAdView.loadAd(adRequest);
+
+        }
+    }
 
 
     }

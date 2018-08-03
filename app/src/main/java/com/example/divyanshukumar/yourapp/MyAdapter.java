@@ -11,6 +11,7 @@ import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
     PackageManager packageManager;
 
+    String ApplicationLabelName;
+
+    Drawable ApplicationIcon;
+
+    String Name = "";
+
+    Drawable icon = null;
+
 
 
 
@@ -76,8 +85,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             super(v);
             mCardView = v;
 
-            textView_App_Name = (TextView) v.findViewById(R.id.simple_text1);
-            icom_App = (ImageView) v.findViewById(R.id.App_imageView);
+            textView_App_Name =  v.findViewById(R.id.simple_text1);
+            icom_App = v.findViewById(R.id.App_imageView);
 
         }
     }
@@ -96,6 +105,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         DbHelper = new AppDbHelper(context1);
 
         packageManager = context1.getPackageManager();
+
 
     }
 
@@ -118,6 +128,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         return vh;
     }
 
+
+    /**
+     * Testing ads
+     */
+
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -126,10 +142,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 //
         final String ApplicationPackageName = (String) mDataset.get(position);
 //
-         String ApplicationLabelName = getAppName(ApplicationPackageName);
-         Drawable ApplicationIcon = getAppIcon(ApplicationPackageName);
+          ApplicationLabelName = getAppName(ApplicationPackageName);
+
+//        String ApplicationLabelName = mNameset.get(position);
 
 //        String ApplicationLabelName = gettheName(ApplicationPackageName);
+
+
+          ApplicationIcon = getAppIcon(ApplicationPackageName);
+
 
         holder.textView_App_Name.setText(ApplicationLabelName);
 
@@ -258,6 +279,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
                 mDataset = (ArrayList<String>) results.values;
 
+
                 notifyDataSetChanged();
             }
         }
@@ -269,7 +291,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
      */
     public String getAppName(String appPackageName){
 
-        String Name = "";
+
 
 //        ApplicationInfo applicationInfo;
 
@@ -295,29 +317,30 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 //
 //        String currentName;
 //
-//
-//        SQLiteDatabase db1 = DbHelper.getReadableDatabase();
-//
+//        Cursor cursor1 = getCursor2();
 //
 //
-//            String newQuery = " SELECT * FROM " + AppEntry.TABLE_NAME +
-//                    " WHERE " + AppEntry.COLUMN_APP_PACKAGE + " = '" + packaname + "';";
-//
-//            cursor = db1.rawQuery(newQuery, null);
-//
-//            int nameColumnIndex = cursor.getColumnIndex(AppEntry.COLUMN_APP_NAME);
-//
-//             currentName = cursor.getString(nameColumnIndex);
+////        SQLiteDatabase db1 = DbHelper.getReadableDatabase();
 //
 //
 //
-//            cursor.close();
+//
+////            String newQuery = "SELECT "+ AppEntry.COLUMN_APP_NAME+ " FROM " + AppEntry.TABLE_NAME +
+////                    " WHERE " + AppEntry.COLUMN_APP_PACKAGE + " = '" + packaname + "';";
+////
+////            cursor1 = db1.rawQuery(newQuery, null);
+//
+//            int nameColumnIndex = cursor1.getColumnIndex(AppEntry.COLUMN_APP_NAME);
+//
+//             currentName = cursor1.getString(nameColumnIndex);
+//
+//
 //
 //
 //
 //        return currentName;
 //    }
-//
+
 
 public Drawable getAppIcon(String appPackName){
 
@@ -339,6 +362,9 @@ public Drawable getAppIcon(String appPackName){
 
     return icon;
 }
+
+
+
 
     }
 
