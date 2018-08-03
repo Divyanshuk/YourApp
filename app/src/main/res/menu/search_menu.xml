@@ -1,35 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/app_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:orderInCategory="100"
         android:title="Search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always">
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"
+        android:orderInCategory="100"
+        app:actionViewClass="android.widget.SearchView" />
 
-    </item>
+    <item
+        android:id="@+id/settingsButton"
+        android:title="Show Notification"
+        app:showAsAction="never" />
 
-
-    <!--<item-->
-        <!--android:id="@+id/tag_red"-->
-        <!--android:orderInCategory="101"-->
-        <!--android:title="TAGSss"-->
-        <!--android:icon="@drawable/tag_red"-->
-        <!--android:visible="true"-->
-        <!--app:showAsAction="always" />-->
-
-    <!--<item-->
-        <!--android:id="@+id/tag_green"-->
-        <!--android:orderInCategory="101"-->
-        <!--android:title="TAGS"-->
-        <!--android:icon="@drawable/tag_green"-->
-        <!--app:showAsAction="always"-->
-        <!--android:visible="false"/>-->
-
+    <item
+        android:id="@+id/darkThemeButton"
+        android:title="Dark Theme"
+        app:showAsAction="never" />
 
 
 </menu>

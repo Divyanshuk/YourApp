@@ -8,6 +8,8 @@
         android:label="@string/blank"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+        <receiver android:name="MainActivity$switchButtonListener" />
+
         <activity
             android:name=".WelcomeActivity"
             android:theme="@style/AppTheme1">

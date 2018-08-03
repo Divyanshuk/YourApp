@@ -1,8 +1,12 @@
 package com.example.divyanshukumar.yourapp;
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -37,25 +42,31 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
+    static private NotificationManager notificationManager;
+
+
     private AdView mAdView;
 
     AdRequest adRequest;
 
     Context thisContext = this;
 
-     RecyclerView list;
+    RecyclerView list;
 
-     LinearLayoutManager mLayoutManager;
+    LinearLayoutManager mLayoutManager;
 
-     MyAdapter adapter;
+    MyAdapter adapter;
 
-     SearchView searchView;
+    SearchView searchView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startNotification();
+
 //
 //        mAdView = findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
@@ -100,6 +111,54 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
+
+
+    //hello0
+
+    static Notification notification = new Notification(R.drawable.ic_search, null,
+            System.currentTimeMillis());
+
+    private void startNotification(){
+        String ns = Context.NOTIFICATION_SERVICE;
+        notificationManager = (NotificationManager) getSystemService(ns);
+
+
+
+        RemoteViews notificationView = new RemoteViews(getPackageName(),
+                R.layout.custom_notification);
+
+        //the intent that is started when the notification is clicked (works)
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+        notification.contentView = notificationView;
+        notification.contentIntent = pendingNotificationIntent;
+        notification.flags = Notification.FLAG_NO_CLEAR;
+
+        //this is the intent that is supposed to be called when the
+        //button is clicked
+        Intent switchIntent = new Intent(this, switchButtonListener.class);
+        PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
+                switchIntent, 0);
+
+        notificationView.setOnClickPendingIntent(R.id.clearButton,
+                pendingSwitchIntent);
+
+        notificationManager.notify(1, notification);
+
+
+    }
+
+
+    public static class switchButtonListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "button clicked ", Toast.LENGTH_SHORT).show();
+            notificationManager.cancelAll();
+        }
+    }
+
 
 
 
@@ -151,6 +210,26 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+
+            case R.id.settingsButton:
+                startNotification();
+
+                break;
+
+            case R.id.darkThemeButton:
+                Toast.makeText(this,"Dark Theme on",Toast.LENGTH_LONG).show();
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -274,7 +353,7 @@ public class MainActivity extends AppCompatActivity{
 
             progressDialog.dismiss();
 
-             list = (RecyclerView) findViewById(R.id.app_List);
+            list = (RecyclerView) findViewById(R.id.app_List);
 
             list.setHasFixedSize(true);
 
@@ -430,7 +509,7 @@ public class MainActivity extends AppCompatActivity{
         protected Void doInBackground(Void... voids) {
 
             mAdView = findViewById(R.id.adView);
-         adRequest = new AdRequest.Builder().build();
+            adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
 
             return null;
@@ -438,14 +517,14 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         protected void onPostExecute(Void voids){
-//            mAdView.loadAd(adRequest);
+            mAdView.loadAd(adRequest);
 
         }
 
-        //ihihh
+        //helllo
     }
 
 
-    }
+}
 
 
