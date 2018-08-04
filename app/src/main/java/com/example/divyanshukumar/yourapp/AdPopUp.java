@@ -110,7 +110,7 @@ public class AdPopUp extends AppCompatActivity implements RewardedVideoAdListene
 
         SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
 
-        sharedPrefClass.setDefaults("seenAd", false);
+        sharedPrefClass.setDefaults("seenAd", true);
 
 //        Intent mainIntent = new Intent(AdPopUp.this, MainActivity.class);
 //        startActivity(mainIntent);
