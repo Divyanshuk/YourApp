@@ -8,7 +8,7 @@
         android:label="Search App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <receiver android:name="MainActivity$switchButtonListener" />
+        <receiver android:name=".MainActivity$switchButtonListener" />
 
         <activity
             android:name=".WelcomeActivity"
@@ -36,6 +36,8 @@
         <activity
             android:name=".DatabaseTest"
             android:theme="@style/AppTheme" />
+        <activity android:name=".AdPopUp"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
     </application>
 
 </manifest>

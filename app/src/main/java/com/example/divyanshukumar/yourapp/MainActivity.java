@@ -34,9 +34,11 @@ import android.widget.Toolbar;
 
 import com.example.divyanshukumar.yourapp.data.AppContract.AppEntry;
 import com.example.divyanshukumar.yourapp.data.AppDbHelper;
+import com.example.divyanshukumar.yourapp.data.SharedPrefClass;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity{
     static private NotificationManager notificationManager;
 
 
-    private AdView mAdView;
+//    private AdView mAdView;
 
     AdRequest adRequest;
 
@@ -90,16 +92,21 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                String ApplicationPackageName = adapter.mDataset.get(0);
+                try {
+                    String ApplicationPackageName = adapter.mDataset.get(0);
 
-                Intent intent = thisContext.getPackageManager().getLaunchIntentForPackage(ApplicationPackageName);
-                if (intent != null) {
+                    Intent intent = thisContext.getPackageManager().getLaunchIntentForPackage(ApplicationPackageName);
+                    if (intent != null) {
 
-                    thisContext.startActivity(intent);
+                        thisContext.startActivity(intent);
 
-                } else {
+                    } else {
 
-                    Toast.makeText(thisContext, ApplicationPackageName + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(thisContext, ApplicationPackageName + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
+                    }
+                }catch (Exception e){
+
+                    Toast.makeText(MainActivity.this, "can not open",Toast.LENGTH_SHORT).show();
                 }
 
                 return false;
@@ -141,12 +148,18 @@ public class MainActivity extends AppCompatActivity{
 
                 }
                 else{
-                    item.setChecked(true);
-                    Toast.makeText(this,"Turned on dark theme",Toast.LENGTH_LONG).show();
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    restartApp();
+                        item.setChecked(true);
 
+                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
+                        Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        restartApp();
+                    }
 
+                    else{
+                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
+                        startActivity(intent);
+                    }
                 }
 
 
@@ -206,18 +219,12 @@ public class MainActivity extends AppCompatActivity{
 
             object.execute();
 
-            LoadAd object2 = new LoadAd();
-            object2.execute();
         }
         else{
 
             UpdateData1 object1 = new UpdateData1();
 
             object1.execute();
-
-            LoadAd object2 = new LoadAd();
-            object2.execute();
-
 
         }
 
@@ -548,30 +555,6 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
-
-
-    public class LoadAd extends AsyncTask<Void,Void,Void>{
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            mAdView = findViewById(R.id.adView);
-            adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void voids){
-            mAdView.loadAd(adRequest);
-
-        }
-
-        //helllo
-    }
-
 
 }
 

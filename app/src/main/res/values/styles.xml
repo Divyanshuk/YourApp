@@ -70,4 +70,12 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+
+    <style name="AppTheme.CustomTheme">
+
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+    </style>
+
 </resources>
