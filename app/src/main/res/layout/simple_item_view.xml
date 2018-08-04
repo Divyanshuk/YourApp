@@ -8,12 +8,13 @@
     android:layout_marginTop="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:background="#FFFFFF"
-    android:foreground="?attr/selectableItemBackground"
+    android:background="?attr/cardcolor"
+    android:foreground="?attr/cardcolor"
     android:clickable="true"
     app:cardCornerRadius="20dp"
     app:cardElevation="5dp"
     app:cardMaxElevation="5dp"
+    app:cardBackgroundColor="?attr/cardcolor"
     app:contentPadding="5dp">
     <!--card_view:cardElevation="5dp"-->
     <!--card_view:contentPadding="5dp"-->
@@ -62,7 +63,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
-            android:textColor="@color/cardview_dark_background"
+            android:textColor="?attr/textcolor"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

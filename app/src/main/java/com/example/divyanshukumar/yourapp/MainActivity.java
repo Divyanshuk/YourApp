@@ -12,12 +12,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -59,113 +61,16 @@ public class MainActivity extends AppCompatActivity{
 
     SearchView searchView;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        startNotification();
-
-//
-//        mAdView = findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
-
-/**
- * Toolbar commands
- */
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        /**
-         * Check whether Database is empty or not and lauch the particular Asynktask object
-         *
-         * if there is data update the data
-         *
-         * if not , load the data and show progress bar
-         */
-        if(new installedApps(this).isThereAnyData()) {
-
-            LoadData1 object = new LoadData1();
-
-            object.execute();
-
-            LoadAd object2 = new LoadAd();
-            object2.execute();
-        }
-        else{
-
-            UpdateData1 object1 = new UpdateData1();
-
-            object1.execute();
-
-            LoadAd object2 = new LoadAd();
-            object2.execute();
-
-
-        }
-
-    }
-
-
-    //hello0
-
-    static Notification notification = new Notification(R.drawable.ic_search, null,
-            System.currentTimeMillis());
-
-    private void startNotification(){
-        String ns = Context.NOTIFICATION_SERVICE;
-        notificationManager = (NotificationManager) getSystemService(ns);
-
-
-
-        RemoteViews notificationView = new RemoteViews(getPackageName(),
-                R.layout.custom_notification);
-
-        //the intent that is started when the notification is clicked (works)
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,
-                notificationIntent, 0);
-
-        notification.contentView = notificationView;
-        notification.contentIntent = pendingNotificationIntent;
-        notification.flags = Notification.FLAG_NO_CLEAR;
-
-        //this is the intent that is supposed to be called when the
-        //button is clicked
-        Intent switchIntent = new Intent(this, switchButtonListener.class);
-        PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
-                switchIntent, 0);
-
-        notificationView.setOnClickPendingIntent(R.id.clearButton,
-                pendingSwitchIntent);
-
-        notificationManager.notify(1, notification);
-
-
-    }
-
-
-    public static class switchButtonListener extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context, "button clicked ", Toast.LENGTH_SHORT).show();
-            notificationManager.cancelAll();
-        }
-    }
-
-
+    private boolean isChecked = false;
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem checkable = menu.findItem(R.id.darkThemeButton);
+        checkable.setChecked(isChecked);
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -224,7 +129,28 @@ public class MainActivity extends AppCompatActivity{
                 break;
 
             case R.id.darkThemeButton:
-                Toast.makeText(this,"Dark Theme on",Toast.LENGTH_LONG).show();
+            {
+                if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+                    item.setChecked(true);
+                }
+
+                if(item.isChecked()){
+                    item.setChecked(false);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    restartApp();
+
+                }
+                else{
+                    item.setChecked(true);
+                    Toast.makeText(this,"Turned on dark theme",Toast.LENGTH_LONG).show();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    restartApp();
+
+
+                }
+
+
+            }
 
 
         }
@@ -232,6 +158,128 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
 
     }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        startNotification();
+
+        /**Dark theme implementation STARTS HERE*/
+
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.dark_theme);
+        }
+        else setTheme(R.style.AppTheme);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        /**Dark theme implementation ENDS HERE*/
+
+
+//
+//        mAdView = findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+
+/**
+ * Toolbar commands
+ */
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        /**
+         * Check whether Database is empty or not and lauch the particular Asynktask object
+         *
+         * if there is data update the data
+         *
+         * if not , load the data and show progress bar
+         */
+        if(new installedApps(this).isThereAnyData()) {
+
+            LoadData1 object = new LoadData1();
+
+            object.execute();
+
+            LoadAd object2 = new LoadAd();
+            object2.execute();
+        }
+        else{
+
+            UpdateData1 object1 = new UpdateData1();
+
+            object1.execute();
+
+            LoadAd object2 = new LoadAd();
+            object2.execute();
+
+
+        }
+
+    }
+
+    public void restartApp(){
+        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+
+    //hello0
+
+    static Notification notification = new Notification(R.drawable.ic_search, null,
+            System.currentTimeMillis());
+
+    private void startNotification(){
+        String ns = Context.NOTIFICATION_SERVICE;
+        notificationManager = (NotificationManager) getSystemService(ns);
+
+
+
+        RemoteViews notificationView = new RemoteViews(getPackageName(),
+                R.layout.custom_notification);
+
+        //the intent that is started when the notification is clicked (works)
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+        notification.contentView = notificationView;
+        notification.contentIntent = pendingNotificationIntent;
+        notification.flags = Notification.FLAG_NO_CLEAR;
+
+        //this is the intent that is supposed to be called when the
+        //button is clicked
+        Intent switchIntent = new Intent(this, switchButtonListener.class);
+        PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
+                switchIntent, 0);
+
+        notificationView.setOnClickPendingIntent(R.id.clearButton,
+                pendingSwitchIntent);
+
+        notificationManager.notify(1, notification);
+
+
+    }
+
+
+    public static class switchButtonListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "button clicked ", Toast.LENGTH_SHORT).show();
+            notificationManager.cancelAll();
+        }
+    }
+
+
+
+
+
 
 //
 //    /**
