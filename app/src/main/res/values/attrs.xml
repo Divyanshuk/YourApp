@@ -9,6 +9,10 @@
         <attr name="buttoncolor" format="color"/>
         <attr name="cardcolor" format="color"/>
         <attr name="ripplecolor" format="color"/>
+        <attr name="toolbarColor" format="color"/>
+        <attr name="searchIconColor" format="integer">
+
+        </attr>
 
     </declare-styleable>
 
