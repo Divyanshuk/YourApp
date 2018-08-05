@@ -6,7 +6,7 @@
     <item
         android:id="@+id/app_search"
         android:title="Search"
-        android:icon="?attr/searchIconColor"
+        android:icon="@drawable/ic_search"
         app:showAsAction="always"
         android:orderInCategory="100"
         app:actionViewClass="android.widget.SearchView" />

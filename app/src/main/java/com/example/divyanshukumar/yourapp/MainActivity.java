@@ -28,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RemoteViews;
 import android.widget.SearchView;
@@ -89,7 +90,10 @@ public class MainActivity extends AppCompatActivity{
 
         searchView.requestFocus();
 
-        searchView.setQueryHint("Search YourApp..");
+        searchView.setQueryHint("Search YourApp...");
+
+        ImageView searchIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+        searchIcon.setImageResource(R.drawable.ic_face_cross);
 
         // listening to search query text change
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
