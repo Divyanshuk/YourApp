@@ -47,4 +47,21 @@ public class SharedPrefClass {
              return false;
 
     }
+
+    public void putTheme(String key, boolean value){
+
+        SharedPreferences darktheme = context.getSharedPreferences("Theme", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor themeEditor = darktheme.edit();
+
+        themeEditor.putBoolean(key, value);
+        themeEditor.apply();
+    }
+
+    public boolean isDarkTheme(String key){
+        SharedPreferences darktheme = context.getSharedPreferences("Theme", Context.MODE_PRIVATE);
+
+        return darktheme.getBoolean(key, false);
+
+    }
 }
