@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity{
 
         searchView.setQueryHint("Search YourApp...");
 
-        ImageView searchIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        searchIcon.setImageResource(R.drawable.ic_face_cross);
 
         // listening to search query text change
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -145,42 +143,44 @@ public class MainActivity extends AppCompatActivity{
 
             case R.id.darkThemeButton:
             {
+                /**
+                 * write to shared preference
+                 */
+                SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
+
                 if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
                     item.setChecked(true);
+                    sharedPrefClass.putTheme("DarkTheme", true);
+
                 }
 
                 if(item.isChecked()){
                     item.setChecked(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-                    /**
-                     * write to shared preference
-                     */
-                    SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
-                    sharedPrefClass.putTheme("DarkTheme", false);
 
+                    sharedPrefClass.putTheme("DarkTheme", false);
                     restartApp();
 
                 }
                 else{
                         item.setChecked(true);
 
-                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
+//                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
                         Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         /**
                          * write to shared preference
                          */
-                        SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
                         sharedPrefClass.putTheme("DarkTheme", true);
 
                         restartApp();
-                    }
+//                    }
 
-                    else{
-                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
-                        startActivity(intent);
-                    }
+//                    else{
+//                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
+//                        startActivity(intent);
+//                    }
                 }
 
 
