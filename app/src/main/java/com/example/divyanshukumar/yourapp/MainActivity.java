@@ -148,6 +148,13 @@ public class MainActivity extends AppCompatActivity{
                 if(item.isChecked()){
                     item.setChecked(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+                    /**
+                     * write to shared preference
+                     */
+                    SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
+                    sharedPrefClass.putTheme("DarkTheme", false);
+
                     restartApp();
 
                 }
@@ -157,6 +164,12 @@ public class MainActivity extends AppCompatActivity{
                     if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
                         Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        /**
+                         * write to shared preference
+                         */
+                        SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
+                        sharedPrefClass.putTheme("DarkTheme", true);
+
                         restartApp();
                     }
 
@@ -184,7 +197,7 @@ public class MainActivity extends AppCompatActivity{
 
         /**Dark theme implementation STARTS HERE*/
 
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES & new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
             setTheme(R.style.dark_theme);
         }
         else setTheme(R.style.AppTheme);
