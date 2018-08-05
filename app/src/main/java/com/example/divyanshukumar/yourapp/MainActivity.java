@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity{
 
         notification.contentView = notificationView;
         notification.contentIntent = pendingNotificationIntent;
-        notification.flags = Notification.FLAG_NO_CLEAR;
+        notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
 
         //this is the intent that is supposed to be called when the
         //button is clicked
