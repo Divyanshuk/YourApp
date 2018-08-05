@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.divyanshukumar.yourapp.data.SharedPrefClass;
@@ -16,10 +18,17 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class AdPopUp extends AppCompatActivity implements RewardedVideoAdListener {
 
 
     private RewardedVideoAd mRewardedVideoAd;
+
+    ProgressBar progressBar;
 
 //    boolean seenAd = false;
 
@@ -33,6 +42,12 @@ public class AdPopUp extends AppCompatActivity implements RewardedVideoAdListene
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_pop_up);
+
+//        TextView textView = (TextView) findViewById(R.id.textView3);
+//        Date currentTime = Calendar.getInstance().getTime();
+//        long time = currentTime.getTime();
+//
+        progressBar = (ProgressBar) findViewById(R.id.reward_progress_bar);
 
         MobileAds.initialize(this, "ca-app-pub-3940256099942544/5224354917");
 
@@ -73,6 +88,8 @@ public class AdPopUp extends AppCompatActivity implements RewardedVideoAdListene
 
         Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
 
+        progressBar.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -110,7 +127,13 @@ public class AdPopUp extends AppCompatActivity implements RewardedVideoAdListene
 
         SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
 
-        sharedPrefClass.setDefaults("seenAd", true);
+        Date currentTime = Calendar.getInstance().getTime();
+        long time = currentTime.getTime();
+
+        /**
+         * 1295759000 is 15 days in long data type
+         */
+        sharedPrefClass.setDefaults("seenAd", time + 60000);
 
 //        Intent mainIntent = new Intent(AdPopUp.this, MainActivity.class);
 //        startActivity(mainIntent);

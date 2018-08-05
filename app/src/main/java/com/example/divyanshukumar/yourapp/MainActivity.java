@@ -43,6 +43,8 @@ import com.google.android.gms.ads.AdView;
 import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -454,7 +456,6 @@ public class MainActivity extends AppCompatActivity{
         AppDbHelper DBhelper;
 
 
-
         UpdateData1(){
 
             DBhelper = new AppDbHelper(thisContext);
@@ -545,6 +546,16 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
 
+
+            /**
+             * Check for 15 days gone or not
+             */
+//            if(!(new SharedPrefClass(thisContext).getDefaults("seenAd"))){
+//
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+////                restartApp();
+//
+//            }
 
             return null;
         }
