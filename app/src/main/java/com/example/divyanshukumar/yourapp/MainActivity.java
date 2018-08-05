@@ -134,6 +134,8 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
+
         switch(item.getItemId()){
 
             case R.id.settingsButton:
@@ -146,27 +148,26 @@ public class MainActivity extends AppCompatActivity{
                 /**
                  * write to shared preference
                  */
-                SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
 
-                if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+
+                if(new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
                     item.setChecked(true);
-                    sharedPrefClass.putTheme("DarkTheme", true);
-
+                }
+                else{
+                    item.setChecked(false);
                 }
 
-                if(item.isChecked()){
+                if(item.isChecked()==true){
                     item.setChecked(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-
                     sharedPrefClass.putTheme("DarkTheme", false);
                     restartApp();
 
                 }
                 else{
-                        item.setChecked(true);
+                        item.setChecked(false);
 
-//                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
+                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
                         Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         /**
@@ -175,12 +176,12 @@ public class MainActivity extends AppCompatActivity{
                         sharedPrefClass.putTheme("DarkTheme", true);
 
                         restartApp();
-//                    }
+                    }
 
-//                    else{
-//                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
-//                        startActivity(intent);
-//                    }
+                    else{
+                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
+                        startActivity(intent);
+                    }
                 }
 
 
