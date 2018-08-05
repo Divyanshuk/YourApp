@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity{
 
         /**Dark theme implementation STARTS HERE*/
 
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES & new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES | new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
             setTheme(R.style.dark_theme);
         }
         else setTheme(R.style.AppTheme);
