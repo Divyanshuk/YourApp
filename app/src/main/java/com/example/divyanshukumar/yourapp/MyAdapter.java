@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -105,9 +106,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         DbHelper = new AppDbHelper(context1);
 
         packageManager = context1.getPackageManager();
-
-
-    }
+        }
 
 
 
@@ -191,6 +190,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     @Override
     public int getItemCount() {
 
+
         return mDataset.size();
 
     }
@@ -250,7 +250,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 //
 //                    String ApplicationLabelName = apkInfoExtractor.getAppName(packageOfApplication);
 
-                        tempList.add(packageOfApplication);
+
+                    tempList.add(packageOfApplication);
 
                         }
 
@@ -278,7 +279,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             protected void publishResults(CharSequence constraint, FilterResults results){
 
                 mDataset = (ArrayList<String>) results.values;
-
 
                 notifyDataSetChanged();
             }

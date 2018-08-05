@@ -16,6 +16,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -47,6 +50,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity{
     SearchView searchView;
 
     private boolean isChecked = false;
+
 
 
     @Override
@@ -112,7 +117,10 @@ public class MainActivity extends AppCompatActivity{
                     }
                 }catch (Exception e){
 
-                    Toast.makeText(MainActivity.this, "can not open",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://search?q="+ query +"&c=apps")));
+
+//                    Toast.makeText(MainActivity.this, "can not open",Toast.LENGTH_SHORT).show();
                 }
 
                 return false;
@@ -121,7 +129,24 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean onQueryTextChange(String query) {
 
-                // filter recycler view when text is changed
+                Button test = (Button) findViewById(R.id.go_to_playStore);
+
+//                test.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        startActivity(new Intent(Intent.ACTION_VIEW,
+//                                Uri.parse("market://search?q="+ query +"&c=apps")));
+//                    }
+//                });
+
+                    if (adapter.getItemCount() == 0) {
+
+                        test.setVisibility(View.VISIBLE);
+                    } else {
+                        test.setVisibility(View.GONE);
+                    }
+
+
                 adapter.getFilter().filter(query);
 
                 return false;
@@ -130,6 +155,7 @@ public class MainActivity extends AppCompatActivity{
         return true;
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -151,6 +177,7 @@ public class MainActivity extends AppCompatActivity{
 
 
                 if(new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
+
                     item.setChecked(true);
                 }
                 else{
@@ -167,7 +194,7 @@ public class MainActivity extends AppCompatActivity{
                 else{
                         item.setChecked(false);
 
-                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
+//                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
                         Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         /**
@@ -176,12 +203,12 @@ public class MainActivity extends AppCompatActivity{
                         sharedPrefClass.putTheme("DarkTheme", true);
 
                         restartApp();
-                    }
+//                    }
 
-                    else{
-                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
-                        startActivity(intent);
-                    }
+//                    else{
+//                        Intent intent = new Intent(MainActivity.this, AdPopUp.class);
+//                        startActivity(intent);
+//                    }
                 }
 
 
@@ -198,12 +225,18 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         startNotification();
 
         /**Dark theme implementation STARTS HERE*/
 
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES | new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
-            setTheme(R.style.dark_theme);
+
+//            if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
+                setTheme(R.style.dark_theme);
+//            }else{
+//                setTheme(R.style.AppTheme);
+//            }
         }
         else setTheme(R.style.AppTheme);
 
