@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,9 +54,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
-    static private NotificationManager notificationManager;
 
 
 //    private AdView mAdView;
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity{
     SearchView searchView;
 
     private boolean isChecked = false;
-
 
 
     @Override
@@ -115,10 +114,10 @@ public class MainActivity extends AppCompatActivity{
 
                         Toast.makeText(thisContext, ApplicationPackageName + " Error, Please Try Again.", Toast.LENGTH_LONG).show();
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("market://search?q="+ query +"&c=apps")));
+                            Uri.parse("market://search?q=" + query + "&c=apps")));
 
 //                    Toast.makeText(MainActivity.this, "can not open",Toast.LENGTH_SHORT).show();
                 }
@@ -139,12 +138,12 @@ public class MainActivity extends AppCompatActivity{
 //                    }
 //                });
 
-                    if (adapter.getItemCount() == 0) {
+                if (adapter.getItemCount() == 0) {
 
-                        test.setVisibility(View.VISIBLE);
-                    } else {
-                        test.setVisibility(View.GONE);
-                    }
+                    test.setVisibility(View.VISIBLE);
+                } else {
+                    test.setVisibility(View.GONE);
+                }
 
 
                 adapter.getFilter().filter(query);
@@ -162,47 +161,44 @@ public class MainActivity extends AppCompatActivity{
 
         SharedPrefClass sharedPrefClass = new SharedPrefClass(getApplicationContext());
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.settingsButton:
                 startNotification();
 
                 break;
 
-            case R.id.darkThemeButton:
-            {
+            case R.id.darkThemeButton: {
                 /**
                  * write to shared preference
                  */
 
 
-                if(new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
+                if (new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")) {
 
                     item.setChecked(true);
-                }
-                else{
+                } else {
                     item.setChecked(false);
                 }
 
-                if(item.isChecked()==true){
+                if (item.isChecked() == true) {
                     item.setChecked(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     sharedPrefClass.putTheme("DarkTheme", false);
                     restartApp();
 
-                }
-                else{
-                        item.setChecked(false);
+                } else {
+                    item.setChecked(false);
 
 //                    if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
-                        Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        /**
-                         * write to shared preference
-                         */
-                        sharedPrefClass.putTheme("DarkTheme", true);
+                    Toast.makeText(this, "Turned on dark theme", Toast.LENGTH_LONG).show();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    /**
+                     * write to shared preference
+                     */
+                    sharedPrefClass.putTheme("DarkTheme", true);
 
-                        restartApp();
+                    restartApp();
 //                    }
 
 //                    else{
@@ -230,15 +226,14 @@ public class MainActivity extends AppCompatActivity{
 
         /**Dark theme implementation STARTS HERE*/
 
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES | new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")){
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES | new SharedPrefClass(getApplicationContext()).isDarkTheme("DarkTheme")) {
 
 //            if(new SharedPrefClass(getApplicationContext()).getDefaults("seenAd")) {
-                setTheme(R.style.dark_theme);
+            setTheme(R.style.dark_theme);
 //            }else{
 //                setTheme(R.style.AppTheme);
 //            }
-        }
-        else setTheme(R.style.AppTheme);
+        } else setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -268,14 +263,13 @@ public class MainActivity extends AppCompatActivity{
          *
          * if not , load the data and show progress bar
          */
-        if(new installedApps(this).isThereAnyData()) {
+        if (new installedApps(this).isThereAnyData()) {
 
             LoadData1 object = new LoadData1();
 
             object.execute();
 
-        }
-        else{
+        } else {
 
             UpdateData1 object1 = new UpdateData1();
 
@@ -285,8 +279,8 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    public void restartApp(){
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+    public void restartApp() {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
         finish();
     }
@@ -294,26 +288,42 @@ public class MainActivity extends AppCompatActivity{
 
     //hello0
 
+    //For notification
+
+//    private NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+//    ;
+//    private static NotificationManager notificationManager;
+//    private int notification_id;
+//    private RemoteViews remoteViews;
+//    private Context context;
+
+    static private NotificationManager notificationManager;
+    private NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    private RemoteViews notificationView;
+    private int notification_id;
+
+
     static Notification notification = new Notification(R.drawable.ic_search, null,
             System.currentTimeMillis());
 
     private void startNotification(){
         String ns = Context.NOTIFICATION_SERVICE;
+
         notificationManager = (NotificationManager) getSystemService(ns);
 
+        notification_id = 1;
 
+        Intent button_intent = new Intent("button_click");
+        button_intent.putExtra("id",notification_id);
+        PendingIntent button_pending_event = PendingIntent.getBroadcast(thisContext,notification_id,
+                button_intent,0);
 
-        RemoteViews notificationView = new RemoteViews(getPackageName(),
-                R.layout.custom_notification);
+        notificationView = new RemoteViews(getPackageName(), R.layout.custom_notification);
 
         //the intent that is started when the notification is clicked (works)
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
-
-        notification.contentView = notificationView;
-        notification.contentIntent = pendingNotificationIntent;
-        notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
 
         //this is the intent that is supposed to be called when the
         //button is clicked
@@ -321,14 +331,20 @@ public class MainActivity extends AppCompatActivity{
         PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
                 switchIntent, 0);
 
+        builder.setOngoing(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(false)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setCustomBigContentView(notificationView)
+                .setContentIntent(pendingNotificationIntent);
+
         notificationView.setOnClickPendingIntent(R.id.clearButton,
                 pendingSwitchIntent);
 
-        notificationManager.notify(1, notification);
+        notificationManager.notify(notification_id,builder.build());
 
 
     }
-
 
     public static class switchButtonListener extends BroadcastReceiver {
         @Override
@@ -337,7 +353,6 @@ public class MainActivity extends AppCompatActivity{
             notificationManager.cancelAll();
         }
     }
-
 
 
 
