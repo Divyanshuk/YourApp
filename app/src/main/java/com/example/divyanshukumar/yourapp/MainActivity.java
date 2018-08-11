@@ -350,8 +350,8 @@ public class MainActivity extends AppCompatActivity {
                 .setCustomBigContentView(notificationView)
                 .setContentIntent(pendingNotificationIntent);
 
-        notificationView.setOnClickPendingIntent(R.id.clearButton,
-                pendingSwitchIntent);
+//        notificationView.setOnClickPendingIntent(R.id.clearButton,
+//                pendingSwitchIntent);
 
         notificationManager.notify(notification_id,builder.build());
 
