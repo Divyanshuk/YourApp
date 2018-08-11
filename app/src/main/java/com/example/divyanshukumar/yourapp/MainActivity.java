@@ -163,10 +163,22 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.settingsButton:
-                startNotification();
+            case R.id.showNotificationButton:
+            {
+                if(item.isChecked()==true)
+                {
+                    notificationManager.cancelAll();
+                    item.setChecked(false);
+                }
 
-                break;
+                else
+                {
+                    startNotification();
+                    item.setChecked(true);
+                }
+            }
+
+            break;
 
             case R.id.darkThemeButton: {
                 /**

@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/app_search"
         android:title="Search"
+        android:icon="@drawable/ic_face_cross"
         app:showAsAction="always"
         android:orderInCategory="100"
         app:actionViewClass="android.widget.SearchView" />
 
     <item
-        android:id="@+id/settingsButton"
-        android:title="Show Notification"
+        android:id="@+id/showNotificationButton"
+        android:title="Notification"
+        android:checkable="true"
+        android:checked="true"
         app:showAsAction="never" />
+
 
     <item
         android:id="@+id/darkThemeButton"
