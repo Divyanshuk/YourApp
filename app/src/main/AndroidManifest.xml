@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.divyanshukumar.yourapp">
+    package="com.oblique.appsearch.search">
 
     <application
         android:allowBackup="true"
@@ -10,11 +10,9 @@
         android:supportsRtl="true">
         <receiver android:name=".MainActivity$switchButtonListener" />
 
-
-
         <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme1">
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,14 +30,15 @@
                 android:resource="@xml/app_list_widget_info" />
         </receiver>
 
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DatabaseTest"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".AdPopUp"
-            android:theme="@style/AppTheme.CustomTheme"></activity>
+        <receiver android:name=".DarkAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/dark_app_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
