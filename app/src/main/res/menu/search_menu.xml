@@ -11,12 +11,12 @@
         android:orderInCategory="100"
         app:actionViewClass="android.widget.SearchView" />
 
-    <item
-        android:id="@+id/showNotificationButton"
-        android:title="Notification"
-        android:checkable="true"
-        android:checked="true"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/showNotificationButton"-->
+        <!--android:title="Notification"-->
+        <!--android:checkable="true"-->
+        <!--android:checked="true"-->
+        <!--app:showAsAction="never" />-->
 
 
     <item

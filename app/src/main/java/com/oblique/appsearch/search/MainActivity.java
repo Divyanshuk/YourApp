@@ -143,22 +143,22 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.showNotificationButton:
-            {
-                if(item.isChecked()==true)
-                {
-                    notificationManager.cancelAll();
-                    item.setChecked(false);
-                }
+//            case R.id.showNotificationButton:
+//            {
+//                if(item.isChecked()==true)
+//                {
+//                    notificationManager.cancelAll();
+//                    item.setChecked(false);
+//                }
+//
+//                else
+//                {
+//                    startNotification();
+//                    item.setChecked(true);
+//                }
+//            }
 
-                else
-                {
-                    startNotification();
-                    item.setChecked(true);
-                }
-            }
-
-            break;
+//            break;
 
             case R.id.darkThemeButton: {
                 /**
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        startNotification();
+//        startNotification();
 
         /**Dark theme implementation STARTS HERE*/
 
@@ -298,27 +298,27 @@ public class MainActivity extends AppCompatActivity {
     static Notification notification = new Notification(R.drawable.ic_search, null,
             System.currentTimeMillis());
 
-    private void startNotification(){
-        String ns = Context.NOTIFICATION_SERVICE;
-        notificationManager = (NotificationManager) getSystemService(ns);
-        RemoteViews notificationView = new RemoteViews(getPackageName(),
-                R.layout.custom_notification);
-        //the intent that is started when the notification is clicked (works)
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,
-                notificationIntent, 0);
-        notification.contentView = notificationView;
-        notification.contentIntent = pendingNotificationIntent;
-        notification.flags = Notification.FLAG_NO_CLEAR;
-        notification.priority = Notification.PRIORITY_MAX;
-        //this is the intent that is supposed to be called when the
-        //button is clicked
-        Intent switchIntent = new Intent(this, switchButtonListener.class);
-        PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
-                switchIntent, 0);
-        notificationManager.notify(1, notification);
-
-    }
+//    private void startNotification(){
+//        String ns = Context.NOTIFICATION_SERVICE;
+//        notificationManager = (NotificationManager) getSystemService(ns);
+//        RemoteViews notificationView = new RemoteViews(getPackageName(),
+//                R.layout.custom_notification);
+//        //the intent that is started when the notification is clicked (works)
+//        Intent notificationIntent = new Intent(this, MainActivity.class);
+//        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0,
+//                notificationIntent, 0);
+//        notification.contentView = notificationView;
+//        notification.contentIntent = pendingNotificationIntent;
+//        notification.flags = Notification.FLAG_NO_CLEAR;
+//        notification.priority = Notification.PRIORITY_MAX;
+//        //this is the intent that is supposed to be called when the
+//        //button is clicked
+//        Intent switchIntent = new Intent(this, switchButtonListener.class);
+//        PendingIntent pendingSwitchIntent = PendingIntent.getBroadcast(this, 0,
+//                switchIntent, 0);
+//        notificationManager.notify(1, notification);
+//
+//    }
 
     public static class switchButtonListener extends BroadcastReceiver {
         @Override
